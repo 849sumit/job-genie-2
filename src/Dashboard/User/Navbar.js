@@ -1,6 +1,10 @@
 import './Navbar.css';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Navbar() {
+  const navigate = useNavigate();
+
   return (
     <header className="navbar">
       <div className="navbar__brand">
@@ -8,10 +12,18 @@ function Navbar() {
         <span className="navbar__title">Job Genie</span>
       </div>
       <nav className="navbar__nav" aria-label="Primary">
-        <button className="navbar__button" type="button">Home</button>
-        <button className="navbar__button" type="button">Apply Now</button>
-        <button className="navbar__button" type="button">Job History</button>
-        <button className="navbar__button" type="button">Profile</button>
+        <button className="navbar__button" type="button" onClick={() => navigate('/')}>
+          Home
+        </button>
+        <button className="navbar__button" type="button" onClick={() => navigate('/apply')}>
+          Apply Now
+        </button>
+        <button className="navbar__button" type="button" onClick={() => navigate('/history')}>
+          Job History
+        </button>
+        <button className="navbar__button" type="button" onClick={() => navigate('/profile')}>
+          Profile
+        </button>
       </nav>
     </header>
   );

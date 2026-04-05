@@ -1,10 +1,11 @@
-import React from "react";
+import React, {useEffect, useLayoutEffect} from "react";
 import "./Udash.css";
-import Navbar from "./Navbar.js";
+// import Navbar from "./Navbar.js";
 import { PieChart } from 'react-minimal-pie-chart';
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer
 } from 'recharts';
+import { useNavigate } from "react-router-dom";
 // 
 
 // Simple static chart data for learning purposes.
@@ -58,10 +59,19 @@ function PieWithLegend({ data }) {
 }
 
 function Udash() {
+
+  const Navigate = useNavigate();
+
+  const isAuth = localStorage.getItem("isAuthenticated");
+
+  useEffect(() => {
+    if(!isAuth){
+    Navigate("/");
+    }
+  }, [isAuth]);
+
   return (
-    <>
-      <Navbar />
-      <main className="udash-container">
+      <div className="udash-container">
         <div className="udash-header">
           <h1>Your Analytics</h1>
           <p>Visual breakdown of applications, responses, and sector activity.</p>
@@ -94,14 +104,11 @@ function Udash() {
                 <Tooltip />
                 <Bar dataKey="applied" fill="#2563eb" />
                 <Bar dataKey="responded" fill="#10b981" />
-
-
               </BarChart>
             </ResponsiveContainer>
           </div>
         </div>
-      </main>
-    </>
+      </div>
   );
 }
 

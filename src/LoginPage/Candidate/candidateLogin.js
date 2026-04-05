@@ -1,15 +1,23 @@
-import React, { useState } from 'react';
+import { useState, useLayoutEffect, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './candidateLogin.css';
 import SignUp from '../SignUp/SignUp';
-import Udash from '../../Dashboard/User/Udash';
 
-function CandidateLogin() {
+function CandidateLogin({ setShowNavbar }) {
+
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
+
+  // Receive setShowNavbar as props and set it to false
+  useLayoutEffect(() => {
+    setShowNavbar(false);
+  }, [])
 
   // Validate form inputs
   const validateForm = () => {
@@ -35,13 +43,31 @@ function CandidateLogin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    console.log('Inside handlesubmit');
+
     if (!validateForm()) {
       return;
     }
 
-    setIsLoading(true);
     try {
       // TODO: Replace with actual API call
+      console.log('about to fetch');
+      const response = await fetch(`/login?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      console.log(response);
+      if (response.ok) {
+        setIsLoading(true);
+        localStorage.setItem('isAuthenticated', 'true');
+        console.log("value " + localStorage.getItem('isAuthenticated'));
+      }
+      else {
+        setErrors({ submit: 'Login failed. Please check your credentials.' });
+      }
+      // const res = await axios.get('/login', { email, password });
       console.log('Login attempt:', { email, password, rememberMe });
 
 
@@ -50,7 +76,7 @@ function CandidateLogin() {
       setPassword('');
     } catch (error) {
       setErrors({ submit: 'Login failed. Please try again.' });
-    } 
+    }
   };
 
   if (showSignUp) {
@@ -58,7 +84,8 @@ function CandidateLogin() {
   }
 
   if (isLoading) {
-    return <Udash />;
+    setShowNavbar(true); // Show navbar when loading the dashboard
+    navigate("/home"); // Redirect to dashboard after successful login
   }
 
   return (

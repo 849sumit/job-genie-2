@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './SignUp.css';
+import axios from 'axios';
 
 function SignUp() {
     const [name, setName] = useState('')
@@ -9,6 +10,15 @@ function SignUp() {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('')
     const [errors, setErrors] = useState({});
+    const [role, setRole] = useState('candidate');
+    const [person, setPerson] = useState({
+        name: '',
+        contactNo: '',
+        address: '',
+        email: '',
+        password: '',
+        role: 'candidate'
+    });
 
     const validateForm = () => {
         const newErrors = {};
@@ -25,9 +35,36 @@ function SignUp() {
             newErrors.password = 'Password must be at least 6 characters';
         }
 
+
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
+    }
+
+    const signUpSubmit = async (e) => {
+
+        if (validateForm()) {
+            person.name = name;
+            person.contactNo = contact;
+            person.address = address;
+            person.email = email;
+            person.password = password;
+            person.role = role;
+            console.log(person);
+            try {
+                const response = await fetch('/signUp', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(person),
+                });
+            }
+            catch (error) {
+                setErrors({ submit: 'SignUp failed. Please try again.' });
+            }
+        }
     };
+
 
     return (
         <div className="signup-container">
@@ -98,13 +135,15 @@ function SignUp() {
                     <label htmlFor="role" className="form-label">Select Role</label>
 
                     <div className="radio-group">
-                        <input type="radio" id="candidate" name="role" value="candidate" />
+                        <input type="radio" id="candidate" name="role" value="candidate" checked={role === "candidate"}  onChange={(e) => setRole(e.target.value)} />
                         <label htmlFor="candidate" className="radio-label">Candidate</label>
-                        <input type="radio" id="company" name="role" value="company" />
+                        <input type="radio" id="company" name="role" value="company" checked={role === "company"} onChange={(e) => setRole(e.target.value)} />
                         <label htmlFor="company" className="radio-label">Company</label>
                     </div>
                     <div>
-                        <button type="submit" className="submit-button">Sign Up</button>
+                        <button type="submit" className="submit-button" onClick={signUpSubmit}>
+                            Sign Up
+                        </button>
                     </div>
                 </form>
             </div>

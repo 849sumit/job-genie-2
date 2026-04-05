@@ -6,6 +6,7 @@
 
 .udash-header {
   margin-bottom: 1.75rem;
+  margin-top: 45px;
 }
 
 .udash-header h1 {
@@ -34,12 +35,14 @@
 
 .chart-card__header h2 {
   margin: 0;
+  padding-bottom: 20px;
   font-size: 1.1rem;
   color: #0f172a;
 }
 
 .chart-card__header p {
   margin: 0.5rem 0 0;
+  padding-bottom: 20px;
   color: #64748b;
   font-size: 0.95rem;
 }

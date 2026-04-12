@@ -29,31 +29,34 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
+
 .form-group {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
+
 .form-label {
-  font-size: 14px;
-  font-weight: 600;
-  color: #333;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
 }
 
 .form-input {
-  padding: 5px 5px;
-  border: 2px solid #e0e0e0;
-  border-radius: 6px;
-  font-size: 14px;
-  font-family: inherit;
-  transition: all 0.3s ease;
-  background-color: #f9f9f9;
+    padding: 5px 5px;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    background-color: #f9f9f9;
 }
 
 .form-input.input-error {
-  border-color: #e74c3c;
-  background-color: #ffe5e5;
+    border-color: #e74c3c;
+    background-color: #ffe5e5;
 }
+
 .radio-group {
     display: flex;
     gap: 10px;

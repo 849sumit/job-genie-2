@@ -1,4 +1,4 @@
-import React, {useEffect, useLayoutEffect} from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import "./Udash.css";
 // import Navbar from "./Navbar.js";
 import { PieChart } from 'react-minimal-pie-chart';
@@ -6,20 +6,6 @@ import {
   BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer
 } from 'recharts';
 import { useNavigate } from "react-router-dom";
-// 
-
-// Simple static chart data for learning purposes.
-const appliedSummary = [
-  { title: "Applied", value: 28, color: "#2563eb" },
-  { title: "Responses", value: 12, color: "#10b981" },
-];
-
-const sectorSummary = [
-  { title: "Tech", value: 11, color: "#60a5fa" },
-  { title: "Finance", value: 8, color: "#facc15" },
-  { title: "Healthcare", value: 5, color: "#f97316" },
-  { title: "Education", value: 4, color: "#a78bfa" },
-];
 
 const weekActivity = [
   { day: "Mon", applied: 3, responded: 1 },
@@ -30,6 +16,8 @@ const weekActivity = [
   { day: "Sat", applied: 2, responded: 1 },
   { day: "Sun", applied: 3, responded: 0 },
 ];
+
+
 
 function PieWithLegend({ data }) {
   return (
@@ -60,55 +48,82 @@ function PieWithLegend({ data }) {
 
 function Udash() {
 
+  const [appliedSummary, setAppliedSummary] = useState([]);
+  const [summary, setSummary] = useState([])
+  const [weekActivity, setWeekActivity] = useState([])
+
   const Navigate = useNavigate();
 
   const isAuth = localStorage.getItem("isAuthenticated");
 
   useEffect(() => {
-    if(!isAuth){
-    Navigate("/");
+    if (!isAuth) {
+      Navigate("/");
+    }
+    else {
+      const dashboard = async () => {
+        const email = localStorage.getItem("email");
+
+        const response = await fetch(`/dashboard?email=${encodeURIComponent(email)}`, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Dashboard data:", data);
+          setAppliedSummary(data.appliedVsResponse);
+          setSummary(data.ApplicationsBySector);
+          setWeekActivity(data.lastWeekActivity);
+        }
+      };
+
+      dashboard();
     }
   }, [isAuth]);
 
-  return (
-      <div className="udash-container">
-        <div className="udash-header">
-          <h1>Your Analytics</h1>
-          <p>Visual breakdown of applications, responses, and sector activity.</p>
-        </div>
 
-        <div className="udash-charts-grid">
-          <div className="chart-card">
+  return (
+    <div className="udash-container">
+      <div className="udash-header">
+        <h1>Your Analytics</h1>
+        <p>Visual breakdown of applications, responses, and sector activity.</p>
+      </div>
+
+      <div className="udash-charts-grid">
+        <div style={{display:"flex", gap:"1.25rem"}}>
+          <div className="chart-card-1">
             <div className="chart-card__header">
               <h2>Applications vs Responses</h2>
             </div>
             <PieWithLegend data={appliedSummary} />
           </div>
 
-          <div className="chart-card">
+          <div className="chart-card-2">
             <div className="chart-card__header">
               <h2>Applications by Sector</h2>
             </div>
-            <PieWithLegend data={sectorSummary} />
-          </div>
-          <div className="chart-card chart-card--bar">
-            <div className="chart-card__header">
-              <h2>Last Week Activity</h2>
-              <p>Daily applied companies and responses</p>
-            </div>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={weekActivity}>
-                <XAxis dataKey="day" />
-                <YAxis />
-                <Legend />
-                <Tooltip />
-                <Bar dataKey="applied" fill="#2563eb" />
-                <Bar dataKey="responded" fill="#10b981" />
-              </BarChart>
-            </ResponsiveContainer>
+            <PieWithLegend data={summary} />
           </div>
         </div>
+        <div className="chart-card chart-card--bar">
+          <div className="chart-card__header">
+            <h2>Last Week Activity</h2>
+            <p>Daily applied companies and responses</p>
+          </div>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={weekActivity}>
+              <XAxis dataKey="date" />
+              <YAxis />
+              <Legend />
+              <Tooltip />
+              <Bar dataKey="applied" fill="#2563eb" />
+              <Bar dataKey="responded" fill="#10b981" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
       </div>
+    </div>
   );
 }
 

@@ -62,12 +62,12 @@ function CandidateLogin({ setShowNavbar }) {
       if (response.ok) {
         setIsLoading(true);
         localStorage.setItem('isAuthenticated', 'true');
-        console.log("value " + localStorage.getItem('isAuthenticated'));
+        localStorage.setItem('email', email);
       }
       else {
         setErrors({ submit: 'Login failed. Please check your credentials.' });
       }
-      // const res = await axios.get('/login', { email, password });
+
       console.log('Login attempt:', { email, password, rememberMe });
 
 
@@ -84,8 +84,8 @@ function CandidateLogin({ setShowNavbar }) {
   }
 
   if (isLoading) {
-    setShowNavbar(true); // Show navbar when loading the dashboard
-    navigate("/home"); // Redirect to dashboard after successful login
+    setShowNavbar(true);
+    navigate("/home");
   }
 
   return (

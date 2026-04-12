@@ -8,7 +8,10 @@ function Navbar() {
   return (
     <header className="navbar">
       <div className="navbar__brand">
-        <div className="navbar__logo" aria-hidden="true">✨</div>
+        {/* <div className="navbar__logo" aria-hidden="true">✨</div> */}
+        <div className="navbar_logo">
+          <img src="/logojob2.png" alt="Job Genie Logo" className="navbar_logo_img" />
+        </div>
         <span className="navbar__title">Job Genie</span>
       </div>
       <nav className="navbar__nav" aria-label="Primary">

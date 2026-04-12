@@ -1,56 +1,37 @@
-// // JobHistory.js
-// import React from 'react';
-
-// function JobHistory() {
-//   // Example data — in a real app this would come from your backend or database
-//   const jobApplications = [
-//     { company: "Microsoft", position: "Frontend Developer", date: "2026-03-15", status: "Interview Scheduled" },
-//     { company: "Google", position: "Backend Engineer", date: "2026-02-28", status: "Rejected" },
-//     { company: "Amazon", position: "Full Stack Developer", date: "2026-01-20", status: "Offer Received" }
-//   ];
-
-//   return (
-//     <div>
-//       <h2>Job History</h2>
-//       <table border="1" cellPadding="10" style={{ width: "100%", marginTop: "20px" }}>
-//         <thead>
-//           <tr>
-//             <th>Company</th>
-//             <th>Position</th>
-//             <th>Date Applied</th>
-//             <th>Status</th>
-//           </tr>
-//         </thead>
-//         <tbody>
-//           {jobApplications.map((job, index) => (
-//             <tr key={index}>
-//               <td>{job.company}</td>
-//               <td>{job.position}</td>
-//               <td>{job.date}</td>
-//               <td>{job.status}</td>
-//             </tr>
-//           ))}
-//         </tbody>
-//       </table>
-//     </div>
-//   );
-// }
-
-// export default JobHistory;
 
 import React, { useEffect, useState } from "react";
 import "./History.css";
+import { useNavigate } from "react-router-dom";
 
 function JobHistory() {
   const [history, setHistory] = useState([]);
+  const Navigate = useNavigate();
 
-  useEffect(() => {
-    // Example: Fetch job history from backend API
-    fetch("http://localhost:5000/api/job-history")
-      .then((res) => res.json())
-      .then((data) => setHistory(data))
-      .catch((err) => console.error("Error fetching history:", err));
-  }, []);
+  const isAuth = localStorage.getItem("isAuthenticated");
+  
+    useEffect(() => {
+      if (!isAuth) {
+        Navigate("/");
+      }
+      else {
+        const jobHistory = async () => {
+          const email = localStorage.getItem("email");
+  
+          const response = await fetch(`/jobhistory?email=${encodeURIComponent(email)}`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          });
+  
+          if (response.ok) {
+            const data = await response.json();
+            console.log("JobHistory data:", data);
+            setHistory(data)
+          }
+        };
+  
+        jobHistory();
+      }
+    }, [isAuth]);
 
   return (
     <div className="history-container">
@@ -70,10 +51,10 @@ function JobHistory() {
           <tbody>
             {history.map((job, index) => (
               <tr key={index}>
-                <td>{job.title}</td>
-                <td>{job.company}</td>
-                <td>{job.appliedDate}</td>
-                <td>{job.status}</td>
+                <td>{job[0]}</td>
+                <td>{job[1]}</td>
+                <td>{job[2]}</td>
+                <td>{job[3]}</td>
               </tr>
             ))}
           </tbody>

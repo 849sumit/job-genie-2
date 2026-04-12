@@ -1,13 +1,26 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./Profile.css";
+import { useState } from "react";
 
 function Profile() {
+    const Navigate = useNavigate()
+    const [active, setActive] = useState("profile")
+    const handleProfileClick = () => {
+        setActive('profile')
+        Navigate('/profile')
+    };
+
+    const handleSettingsClick = () => {
+        Navigate('/settings')
+        setActive("setting")
+    };
+
     return (
         <div className="profile-container">
             <aside className="sidebar">
                 <ul>
-                    <li className="active">Profile</li>
-                    <li className="active">settings</li>
+                    <li className={active === "profile" ? "active" : ""} onClick={handleProfileClick}>Profile</li>
+                    <li className={active === "setting" ? "active" : ""} onClick={handleSettingsClick}>settings</li>
                 </ul>
             </aside>
 
@@ -70,16 +83,6 @@ function Profile() {
                         <span className="skill">HTML</span>
                         <span className="skill">CSS</span>
                         <span className="skill">MySQL</span>
-                    </div>
-                </section>
-
-                {/* Account Settings */}
-                <section className="card">
-                    <h3>Account Settings</h3>
-                    <div className="account-settings">
-                        <p><strong>Password:</strong> ••••••••</p>
-                        <button className="change-btn">Change Password</button>
-                        <button className="logout-btn">Log Out</button>
                     </div>
                 </section>
             </main>

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './SignUp.css';
-import axios from 'axios';
 
 function SignUp() {
     const [name, setName] = useState('')
@@ -109,7 +108,7 @@ function SignUp() {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             className={`form-input ${errors.email ? 'input-error' : ''}`}
-                        />
+                        /> 
                     </div>
                     <div className="form-group">
                         <label htmlFor="password" className="form-label">Password</label>
@@ -135,7 +134,7 @@ function SignUp() {
                     <label htmlFor="role" className="form-label">Select Role</label>
 
                     <div className="radio-group">
-                        <input type="radio" id="candidate" name="role" value="candidate" checked={role === "candidate"}  onChange={(e) => setRole(e.target.value)} />
+                        <input type="radio" id="candidate" name="role" value="candidate" checked={role === "candidate"} onChange={(e) => setRole(e.target.value)} />
                         <label htmlFor="candidate" className="radio-label">Candidate</label>
                         <input type="radio" id="company" name="role" value="company" checked={role === "company"} onChange={(e) => setRole(e.target.value)} />
                         <label htmlFor="company" className="radio-label">Company</label>

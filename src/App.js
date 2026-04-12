@@ -1,5 +1,4 @@
-
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './Dashboard/User/Navbar';
 import CandidateLogin from './LoginPage/Candidate/candidateLogin';
@@ -7,7 +6,7 @@ import ApplyNow from './ApplyNow/Applynow';
 import Home from './Dashboard/User/Udash';
 import JobHistory from './JobHistory/History';
 import Profile from './UserProfile/Profile';
-// import Settings from './UserProfile/Setting';
+import Settings from './UserProfile/Setting';
 
 
 function App() {
@@ -17,16 +16,16 @@ function App() {
   return (
     <Router>
       {showNavbar && <Navbar />}
-        <Routes>
-        <Route path="/home" element={<Home/>} />
-        <Route path="/" element={<CandidateLogin setShowNavbar={setShowNavbar} />} /> 
+      <Routes>
+        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<CandidateLogin setShowNavbar={setShowNavbar} />} />
         <Route path="/apply" element={<ApplyNow />} />
         <Route path="/history" element={<JobHistory />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/settings" element={<Settings />} />
       </Routes>
     </Router>
   );
-
 }
 
 export default App;

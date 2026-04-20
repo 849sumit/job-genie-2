@@ -63,7 +63,6 @@ function Companies() {
     const apply = async (e) => {
         user.email = email
         user.jobId = selectedJob[9]
-        console.log(user);
         const response = await fetch('/apply', {
             method: 'POST',
             headers: {
@@ -84,19 +83,8 @@ function Companies() {
 
     return (
         <div className="companies-container">
-            <aside className="sidebar">
-                <h3>Filters</h3>
-                <ul>
-                    <li><input type="checkbox" /> Tech Companies</li>
-                    <li><input type="checkbox" /> Remote Friendly</li>
-                    <li><input type="checkbox" /> Internship</li>
-                    <li><input type="checkbox" /> Full Time</li>
-                </ul>
-            </aside>
-
             <main className="main-content">
                 <h1>Companies</h1>
-
 
                 <input
                     type="text"

@@ -14,12 +14,10 @@ function CandidateLogin({ setShowNavbar }) {
   const [rememberMe, setRememberMe] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
 
-  // Receive setShowNavbar as props and set it to false
   useLayoutEffect(() => {
     setShowNavbar(false);
   }, [])
 
-  // Validate form inputs
   const validateForm = () => {
     const newErrors = {};
 
@@ -39,19 +37,14 @@ function CandidateLogin({ setShowNavbar }) {
     return Object.keys(newErrors).length === 0;
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    console.log('Inside handlesubmit');
 
     if (!validateForm()) {
       return;
     }
 
     try {
-      // TODO: Replace with actual API call
-      console.log('about to fetch');
       const response = await fetch(`/login?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`, {
         method: 'GET',
         headers: {
@@ -60,9 +53,12 @@ function CandidateLogin({ setShowNavbar }) {
       });
       console.log(response);
       if (response.ok) {
+        const data = await response.json();
+        setShowNavbar(true)
         setIsLoading(true);
         localStorage.setItem('isAuthenticated', 'true');
         localStorage.setItem('email', email);
+        localStorage.setItem('role', data)
       }
       else {
         setErrors({ submit: 'Login failed. Please check your credentials.' });
@@ -70,8 +66,6 @@ function CandidateLogin({ setShowNavbar }) {
 
       console.log('Login attempt:', { email, password, rememberMe });
 
-
-      // Reset form
       setEmail('');
       setPassword('');
     } catch (error) {

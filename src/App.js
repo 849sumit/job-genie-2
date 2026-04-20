@@ -7,6 +7,7 @@ import Home from './Dashboard/User/Udash';
 import JobHistory from './JobHistory/History';
 import Profile from './UserProfile/Profile';
 import Settings from './UserProfile/Setting';
+import CompanyApplicants from './Dashboard/Company/CompanyApplicant';
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/" element={<CandidateLogin setShowNavbar={setShowNavbar} />} />
         <Route path="/apply" element={<ApplyNow />} />
         <Route path="/history" element={<JobHistory />} />
+        <Route path="/companyApplicants" element={<CompanyApplicants/>}/>
         <Route path="/profile" element={<Profile />} />
         <Route path="/settings" element={<Settings />} />
       </Routes>

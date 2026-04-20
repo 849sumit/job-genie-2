@@ -1,23 +1,9 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import "./Udash.css";
-// import Navbar from "./Navbar.js";
 import { PieChart } from 'react-minimal-pie-chart';
-import {
-  BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer
-} from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { useNavigate } from "react-router-dom";
-
-const weekActivity = [
-  { day: "Mon", applied: 3, responded: 1 },
-  { day: "Tue", applied: 4, responded: 2 },
-  { day: "Wed", applied: 6, responded: 3 },
-  { day: "Thu", applied: 5, responded: 2 },
-  { day: "Fri", applied: 7, responded: 3 },
-  { day: "Sat", applied: 2, responded: 1 },
-  { day: "Sun", applied: 3, responded: 0 },
-];
-
-
+import CompanyDash from "../Company/Company";
 
 function PieWithLegend({ data }) {
   return (
@@ -51,10 +37,12 @@ function Udash() {
   const [appliedSummary, setAppliedSummary] = useState([]);
   const [summary, setSummary] = useState([])
   const [weekActivity, setWeekActivity] = useState([])
+  const [companyDashboard, setCompanyDashboard] = useState(false)
 
   const Navigate = useNavigate();
 
   const isAuth = localStorage.getItem("isAuthenticated");
+  const role = localStorage.getItem("role");
 
   useEffect(() => {
     if (!isAuth) {
@@ -63,24 +51,33 @@ function Udash() {
     else {
       const dashboard = async () => {
         const email = localStorage.getItem("email");
+        if (role === 'candidate') {
 
-        const response = await fetch(`/dashboard?email=${encodeURIComponent(email)}`, {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        });
+          const response = await fetch(`/dashboard?email=${encodeURIComponent(email)}`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          });
 
-        if (response.ok) {
-          const data = await response.json();
-          console.log("Dashboard data:", data);
-          setAppliedSummary(data.appliedVsResponse);
-          setSummary(data.ApplicationsBySector);
-          setWeekActivity(data.lastWeekActivity);
+          if (response.ok) {
+            const data = await response.json();
+            console.log("Dashboard data:", data);
+            setAppliedSummary(data.appliedVsResponse);
+            setSummary(data.ApplicationsBySector);
+            setWeekActivity(data.lastWeekActivity);
+          }
+        }
+        else{
+          setCompanyDashboard(true)
         }
       };
 
       dashboard();
     }
   }, [isAuth]);
+
+  if(companyDashboard){
+    return <CompanyDash />
+  }
 
 
   return (
@@ -91,7 +88,7 @@ function Udash() {
       </div>
 
       <div className="udash-charts-grid">
-        <div style={{display:"flex", gap:"1.25rem"}}>
+        <div style={{ display: "flex", gap: "1.25rem" }}>
           <div className="chart-card-1">
             <div className="chart-card__header">
               <h2>Applications vs Responses</h2>

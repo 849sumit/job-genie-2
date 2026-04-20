@@ -34,7 +34,7 @@
 }
 
 .edit-profile-btn {
-  background-color: #1976d2;
+  background-color:#667eea;
   color: white;
   border: none;
   padding: 8px 12px;
@@ -48,7 +48,7 @@
   width: 200px;
   padding: 20px;
   position: fixed;
-  top: 70px;
+  top: 86px;
   bottom: 0;
 }
 
@@ -64,7 +64,7 @@
 }
 
 .sidebar .active {
-  background-color: #1976d2;
+  background-color:#667eea;
   color: white;
   border-radius: 4px;
 }
@@ -82,8 +82,9 @@
 }
 
 .profile-pic {
-  border-radius: 50%;
   margin-right: 20px;
+  width: 150px; 
+  height: auto;
 }
 
 .divider {
@@ -110,6 +111,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.info-item-1 {
+  display: flex;
+  gap: 145px;
 }
 
 .edit-link {
@@ -143,6 +149,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  margin-top: 20px;
 }
 
 .skill {
@@ -168,4 +175,9 @@
 .logout-btn {
   background-color: #d32f2f;
   color: white;
+}
+
+.aboutbox{
+  width: 450px;
+  height: 120px;
 }

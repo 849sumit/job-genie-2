@@ -116,8 +116,6 @@ function Settings() {
 
             <button type="submit" className="update-btn">Update Password</button>
             <button type="submit" className="log-btn" onClick={logout}>Log Out</button>
-            {/* {success && <p className="success">{success}</p>}
-            {errors.apiError && <p className="error">{errors.apiError}</p>} */}
           </div>
         </form>
       </section>

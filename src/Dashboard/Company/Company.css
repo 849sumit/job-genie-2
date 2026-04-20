@@ -1,0 +1,118 @@
+/* CompanyDash.css */
+
+/* ====== Container & Header ====== */
+.companydash-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem 3rem;
+  background-color: #f9fafb;
+  min-height: 100vh;
+}
+
+.companydash-header {
+  text-align: left;
+  margin-top: 45px;
+}
+
+.companydash-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 0.25rem;
+}
+
+.companydash-header p {
+  font-size: 1rem;
+  color: #475569;
+}
+
+/* ====== Charts Grid ====== */
+.companydash-charts-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* ====== Chart Cards ====== */
+.chart-card-1,
+.chart-card-2,
+.chart-card--bar {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  flex: 1;
+}
+
+.chart-card__header {
+  margin-bottom: 1rem;
+}
+
+.chart-card__header h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.chart-card__header p {
+  font-size: 0.9rem;
+  color: #64748b;
+}
+
+/* ====== Pie Chart & Legend ====== */
+.pie-chart-side {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.pie-chart-side__legend {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.pie-chart-side__legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: #334155;
+}
+
+.pie-chart-side__legend-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+}
+
+/* ====== Bar Chart Card ====== */
+.chart-card--bar {
+  width: 100%;
+}
+
+.recharts-wrapper {
+  margin-top: 1rem;
+}
+
+/* ====== Responsive Design ====== */
+@media (max-width: 768px) {
+  .companydash-container {
+    padding: 1.5rem;
+  }
+
+  .companydash-charts-grid {
+    gap: 1.5rem;
+  }
+
+  .pie-chart-side {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .chart-card-1,
+  .chart-card-2 {
+    width: 100%;
+  }
+}

@@ -4,11 +4,11 @@ import { useNavigate } from 'react-router-dom';
 
 function Navbar() {
   const navigate = useNavigate();
+  const role = localStorage.getItem("role")
 
   return (
     <header className="navbar">
       <div className="navbar__brand">
-        {/* <div className="navbar__logo" aria-hidden="true">✨</div> */}
         <div className="navbar_logo">
           <img src="/logojob2.png" alt="Job Genie Logo" className="navbar_logo_img" />
         </div>
@@ -18,9 +18,16 @@ function Navbar() {
         <button className="navbar__button" type="button" onClick={() => navigate('/')}>
           Home
         </button>
-        <button className="navbar__button" type="button" onClick={() => navigate('/apply')}>
+        {role === "candidate" ? (
+           <button className="navbar__button" type="button" onClick={() => navigate('/apply')}>
           Apply Now
         </button>
+        ) : (
+           <button className="navbar__button" type="button" onClick={() => navigate('/companyApplicants')}>
+          Applications
+        </button>
+        )}
+      
         <button className="navbar__button" type="button" onClick={() => navigate('/history')}>
           Job History
         </button>
